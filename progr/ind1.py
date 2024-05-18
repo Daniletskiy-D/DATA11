@@ -8,14 +8,14 @@
 import math
 from multiprocessing import Process, Manager
 
-
 E = 10e-7
+
 
 def series1(x, eps, results):
     s = 0
     n = 1
     while True:
-        term = (-1)**(n+1) * math.sin(n * x) / n
+        term = (-1) ** (n + 1) * math.sin(n * x) / n
         if abs(term) < eps:
             break
         else:
@@ -23,17 +23,17 @@ def series1(x, eps, results):
             n += 1
     results["series1"] = s
 
+
 def series2(x, eps, results):
     s = 0
     n = 0
-    while True:
-        term = x**(2*n + 1) / math.factorial(2*n + 1)
-        if abs(term) < eps:
-            break
-        else:
-            s += term
-            n += 1
+    term = x 
+    while abs(term) >= eps:
+        s += term
+        n += 1
+        term *= x ** 2 / ((2 * n) * (2 * n + 1))
     results["series2"] = s
+
 
 def main():
     with Manager() as manager:
@@ -66,6 +66,7 @@ def main():
         print(f"Sum of series 2: {round(sum2, 7)}")
         print(f"Control value 2: {round(control_value2, 7)}")
         print(f"Match 2: {round(sum2, 7) == round(control_value2, 7)}")
+
 
 if __name__ == "__main__":
     main()
